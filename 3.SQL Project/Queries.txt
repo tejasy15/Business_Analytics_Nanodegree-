@@ -1,0 +1,50 @@
+Q.1
+Who bought invoices in Germany ?
+
+SELECT (cust.firstname || ' ' || cust.lastname) Full_Name, inv.billingcountry Country, SUM(inv.total) Total_Purchases
+FROM InvoiceLine invl
+JOIN invoice inv
+ON invl.invoiceid = inv.InvoiceId
+JOIN customer cust
+ON inv.customerid = cust.customerid
+WHERE Country= 'Germany'
+GROUP BY 1,2
+ORDER BY 3 DESC
+
+
+Q.2
+Which country at top with most customer ?
+
+SELECT cust.country, SUM(inv.Total) as Invoices
+FROM Customer cust
+JOIN Invoice inv
+ON inv.customerId = cust.customerId
+GROUP by cust.country
+ORDER by invoices desc
+LIMIT 5
+
+
+Q.3
+
+Which 5 album has the most sold tracks?
+
+select  alb.Title , count(tr.TrackId ) as count
+from Track tr 
+join InvoiceLine inl 
+on inl.TrackId = tr.TrackId 
+join Album alb 
+on alb.AlbumId = tr.AlbumId 
+group by 1
+order by 2 desc
+limit 5
+
+
+Q.4
+Which mediatype is mostly uesd? 
+
+SELECT m.name as mediatype_name , count(m.MediaTypeId) as track_no 
+FROM MediaType m 
+join Track t 
+on t.MediaTypeId=m.MediaTypeId
+GROUP BY 1
+ORDER BY 2 DESC
